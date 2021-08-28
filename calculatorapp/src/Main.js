@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import footer from './Footer';
+import './App1.css';
 
 class main extends React.Component  {
     constructor () {
@@ -8,7 +10,8 @@ class main extends React.Component  {
             input: 0,
             firstInput: 0,
             finalInput: 0,
-            total: 0
+            total: 0,
+            sign: 0
         }
     }
 
@@ -70,30 +73,30 @@ class main extends React.Component  {
     handlechangeDivide = () => {
         this.setState (prevState => ({
             firstInput : prevState.input,
-            total: prevState.firstInput / prevState.input,
-            input: 0
+            input: 0,
+            sign: "/"
         }))
     }
     handlechangeMultiply = () => {
         this.setState (prevState => ({
             firstInput : prevState.input,
-            total: prevState.firstInput * prevState.input,
-            input: 0
+            input: 0,
+            sign: "*"
         }))
     }
     handlechangeAdd = () => {
         this.setState (prevState => ({
             firstInput : prevState.input,
-            total: prevState.firstInput + prevState.input,
-            input: 0
+            input: 0,
+            sign: "+"
             
         }))
     }
     handlechangeSubtract = () => {
         this.setState (prevState => ({
             firstInput : prevState.input,
-            total: prevState.firstInput - prevState.input,
-            input: 0
+            input: 0,
+            sign: "-"
         }))
     }
     handlechangeClear = () => {
@@ -105,14 +108,35 @@ class main extends React.Component  {
         })
     }
     handlechangeTotal = () => {
-        this.setState ({
-            finalInput: this.state.total
-        })
+        if(this.state.sign === "/") {
+            this.setState(prevState => ({
+                total: prevState.firstInput / prevState.input,
+                firstInput: this.state.total
+            }))
+        } else 
+        if(this.state.sign === "*") {
+            this.setState(prevState => ({
+                total: prevState.firstInput * prevState.input,
+                firstInput: this.state.total
+            }))
+        } else 
+        if(this.state.sign === "+") {
+            this.setState(prevState => ({
+                total: prevState.firstInput + prevState.input,
+                firstInput: this.state.total
+            }))
+        } else 
+        if(this.state.sign === "-") {
+            this.setState(prevState => ({
+                total: prevState.firstInput - prevState.input,
+                firstInput: this.state.total
+            }))
+        }
     }
     render() {
         return (
-            <>
-            <button value="1" onClick={this.handlechange1}>1</button>
+            <div prop1={this.state.total} className="Calculator">
+            <button onClick={this.handlechange1}>1</button>
             <button onClick={this.handlechange2}>2</button>
             <button onClick={this.handlechange3}>3</button>
             <button onClick={this.handlechangeDivide}>/</button>
@@ -134,12 +158,13 @@ class main extends React.Component  {
             <button onClick={this.handlechangeClear}>AC</button>
             <h2>FirstInput: {this.state.firstInput}</h2>
             <h2>SecondInput: {this.state.input}</h2>
-            <h2>Total: {this.state.finalInput}</h2>
-            </>
+            <h2 >Total: {this.state.total} </h2>
+            </div>
         )
     }
     
 };
+
 
 
 export default main;
